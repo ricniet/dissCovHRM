@@ -2,6 +2,33 @@ library(R2jags); library(tictoc); library(tidyverse)
 
 source('./dataGeneration/genModels.R')
 
+simDat <- covHRMf.onlyRho.sim(N=500,J=8,K=5,R=40,twoPL=F,eta=c(.88,1.1))
+#data <- simDat$data
+data <- simDat$less_data
+subject <- data$subject
+item <- data$item
+rater <- data$rater
+cov1 <- data$cov1
+x <- data$x
+rMatrix <- simDat$raterMatrix %>% arrange(cov1,rater)
+#for constraints:
+paste('phi[',rMatrix[which(rMatrix$cov1==1),]$rater[1:(length(rMatrix[which(rMatrix$cov1==1),]$rater)-1)],']',sep='',collapse='+')
+paste('phi[',rMatrix[which(rMatrix$cov1==2),]$rater[1:(length(rMatrix[which(rMatrix$cov1==2),]$rater)-1)],']',sep='',collapse='+')
+# number of subjects per rater
+data %>% group_by(rater) %>% summarize(n_distinct(subject))
+
+N <- simDat$N     
+S <- 2  #no. of covariate levels
+R <- simDat$R 
+J <- simDat$J 
+K <- simDat$K                
+NN<- nrow(data)
+sd.phi <- sqrt(3)
+sd.psi <- sqrt(15)
+sd.eta <- sqrt(3)
+sd.beta <- 1
+sd.kappa <- 1
+
 covHRM_mod = function(){
   
   # Specify Likelihood
@@ -13,7 +40,7 @@ covHRM_mod = function(){
     x[i] ~ dcat(prob.sdt[i,])
     
     for (k in 1:K) {
-    
+      
       a[i,k] <- k - xi[subject[i],item[i]] - (phi[rater[i]] + eta[cov1[i]])
       b[i,k] <- -pow(a[i,k],2)
       c[i,k] <- 1 / (2 * psi[rater[i]]^2)
@@ -89,34 +116,6 @@ covHRM_mod = function(){
   prec.beta <- pow(sd.beta, -2)
   prec.kappa <- pow(sd.kappa, -2)
 }
-
-simDat <- covHRMf.onlyRho.sim(N=500,J=8,K=5,R=40,twoPL=F,eta=c(.88,1.1))
-#data <- simDat$data
-data <- simDat$less_data
-subject <- data$subject
-item <- data$item
-rater <- data$rater
-cov1 <- data$cov1
-x <- data$x
-rMatrix <- simDat$raterMatrix %>% arrange(cov1,rater)
-#for constraints:
-paste('phi[',rMatrix[which(rMatrix$cov1==1),]$rater[1:(length(rMatrix[which(rMatrix$cov1==1),]$rater)-1)],']',sep='',collapse='+')
-paste('phi[',rMatrix[which(rMatrix$cov1==2),]$rater[1:(length(rMatrix[which(rMatrix$cov1==2),]$rater)-1)],']',sep='',collapse='+')
-# number of subjects per rater
-data %>% group_by(rater) %>% summarize(n_distinct(subject))
-
-N <- simDat$N     
-S <- 2  #no. of covariate levels
-R <- simDat$R 
-J <- simDat$J 
-K <- simDat$K                
-NN<- nrow(data)
-sd.phi <- sqrt(3)
-sd.psi <- sqrt(15)
-sd.eta <- sqrt(3)
-sd.beta <- 1
-sd.kappa <- 1
-
 
 covHRM_data <- list("subject","rater","x","item","cov1",
                     "NN","N","J","R","K","S",
