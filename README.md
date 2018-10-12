@@ -1,3 +1,3 @@
 # dissCovHRM
 
-Code related to covariate HRM.adding a line
+Code related to covariate HRM for my dissertation.
