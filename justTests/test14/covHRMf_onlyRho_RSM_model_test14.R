@@ -406,7 +406,7 @@ toc()
 
 covHRM_results <- data.frame(round(covHRM_jags$BUGSoutput$summary,4))
 
-write.csv(covHRM_results, file='./justTests/test4/covHRMf_RHOonly_test14_N5000R200J5K5_3ch20000i10000b20t.csv')
+write.csv(covHRM_results, file='./justTests/test14/covHRMf_RHOonly_test14_N5000R200J5K5_3ch20000i10000b20t.csv')
 save(covHRM_jags, file='./justTests/test14/covHRMf_RHOonly_test14_N5000R200J5K5_3ch20000i10000b20t.Rdat')
 
 source('./justTests/assessTests.R')
