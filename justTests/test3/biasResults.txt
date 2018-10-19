@@ -1,0 +1,15 @@
+RHO, Average bias (SD):
+ 0.008 (0.121) 
+
+ PHI, Average bias (SD):
+ -0.06 (0.163) 
+
+ ETA1, Bias:
+ 0.189 
+
+ ETA2, Bias:
+ -0.072 
+
+ etaDELTA, Bias:
+ 0.262 
+

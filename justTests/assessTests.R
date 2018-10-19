@@ -119,6 +119,17 @@ assess <- function(jagsObj, R, filePath, eval, random) {
   
   biasEtaDelta <- round(covHRM_results[which(row.names(covHRM_results)=='etaDelta'),1] - (simDat$trueValues$eta[1] - simDat$trueValues$eta[2]),3)
   
+<<<<<<< HEAD
+=======
+  sink(file=paste(filePath,"biasResults.txt",sep=""), append=F)
+  print("Rho: Average bias (SD):")
+  sprintf("%s (%s)",aveBiasRho,sdBiasRho)
+  
+  print("Phi: Average bias (SD):")
+  sprintf("%s (%s)",aveBiasPhi,sdBiasPhi)
+  sink()
+  
+>>>>>>> origin
   cat("RHO, Average bias (SD):\n",sprintf("%s (%s)",aveBiasRho,sdBiasRho),"\n\n",
     "PHI, Average bias (SD):\n",sprintf("%s (%s)",aveBiasPhi,sdBiasPhi),"\n\n",
     "ETA1, Bias:\n",sprintf("%s",biasEta1),"\n\n",

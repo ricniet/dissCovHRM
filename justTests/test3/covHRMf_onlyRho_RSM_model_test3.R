@@ -203,3 +203,11 @@ covHRM_results <- data.frame(round(covHRM_jags$BUGSoutput$summary,4))
 write.csv(covHRM_results, file='./testResults/fcovHRM_onlyRHO/covHRMf_RHOonly_test3_N500R40J8K5_20000i10000b20t.csv')
 
 save(covHRM_jags, file='./testResults/fcovHRM_onlyRHO/covHRMf_RHOonly_test3_N500R40J8K5_20000i10000b20t.Rdat')
+
+source('./justTests/assessTests.R')
+
+assess(jagsObj = covHRM_jags, 
+       R = R,
+       filePath = './justTests/test3/',
+       eval = c(1:26,28:29),
+       random = F)
