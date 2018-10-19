@@ -331,7 +331,7 @@ covHRMr.onlyRho.sim <- function(N,J,K,R,twoPL=F,eta,sd.eta) {
   library(Matrix)
   rank <- rankMatrix(D)
   
-  phi <- runif(R,0.4,0.9)
+  phi <- rnorm(R,0,.9)
   psi <- runif(R,0.1,0.7)
   etaB <- as.matrix(c(phi,eta))
   

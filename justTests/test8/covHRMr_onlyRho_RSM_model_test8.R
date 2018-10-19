@@ -9,10 +9,19 @@ data <- simDat$less_data
 subject <- data$subject
 item <- data$item
 rater <- data$rater
-rMatrix <- data %>% select(rater,cov1) %>% distinct()
+rMatrix <- simDat$raterMatrix %>% arrange(cov1,rater)
 rater2 <- rMatrix$rater
 cov1 <- rMatrix$cov1
 x <- data$x
+
+#for constraints:
+paste('phi[',rMatrix[which(rMatrix$cov1==1),]$rater[1:(length(rMatrix[which(rMatrix$cov1==1),]$rater)-1)],']',sep='',collapse='+')
+paste('phi[',rMatrix[which(rMatrix$cov1==2),]$rater[1:(length(rMatrix[which(rMatrix$cov1==2),]$rater)-1)],']',sep='',collapse='+')
+#for saving rho
+paste('rho[',rMatrix[which(rMatrix$cov1==1),1],'] <- ','phi[',rMatrix[which(rMatrix$cov1==1),1],'] + eta[1]',collapse=' ',sep='')
+paste('rho[',rMatrix[which(rMatrix$cov1==2),1],'] <- ','phi[',rMatrix[which(rMatrix$cov1==2),1],'] + eta[2]',collapse=' ',sep='')
+# number of subjects per rater
+data %>% group_by(rater) %>% summarize(n_distinct(subject))
 
 N <- simDat$N     
 S <- 2  #no. of covariate levels

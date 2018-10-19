@@ -12,6 +12,7 @@ rater <- data$rater
 cov1 <- data$cov1
 x <- data$x
 rMatrix <- simDat$raterMatrix %>% arrange(cov1,rater)
+
 #for constraints:
 paste('phi[',rMatrix[which(rMatrix$cov1==1),]$rater[1:(length(rMatrix[which(rMatrix$cov1==1),]$rater)-1)],']',sep='',collapse='+')
 paste('phi[',rMatrix[which(rMatrix$cov1==2),]$rater[1:(length(rMatrix[which(rMatrix$cov1==2),]$rater)-1)],']',sep='',collapse='+')
